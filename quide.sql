@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.0
+-- version 4.8.4
 -- https://www.phpmyadmin.net/
 --
--- Hôte : 127.0.0.1
--- Généré le :  ven. 08 mars 2019 à 14:19
--- Version du serveur :  5.7.17
--- Version de PHP :  5.6.30
+-- Hôte : 127.0.0.1:3306
+-- Généré le :  mar. 12 mars 2019 à 15:39
+-- Version du serveur :  5.7.24
+-- Version de PHP :  7.2.14
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -28,20 +28,26 @@ SET time_zone = "+00:00";
 -- Structure de la table `categorie`
 --
 
-CREATE TABLE `categorie` (
-  `id_cat` int(10) NOT NULL,
-  `nom_cat` varchar(250) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+DROP TABLE IF EXISTS `categorie`;
+CREATE TABLE IF NOT EXISTS `categorie` (
+  `id_cat` int(10) NOT NULL AUTO_INCREMENT,
+  `nom_cat` varchar(64) NOT NULL,
+  PRIMARY KEY (`id_cat`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `categorie`
 --
 
 INSERT INTO `categorie` (`id_cat`, `nom_cat`) VALUES
-(1, 'bar'),
-(2, 'pub'),
-(3, 'restaurant'),
-(4, 'street food');
+(1, 'Les Incontournables'),
+(2, 'Je découvre de nouveaux endroits'),
+(3, 'J\'ai les crocs'),
+(4, 'Je prends qu\'un verre'),
+(5, 'Je veux m\'éclater'),
+(6, 'Je sors entre amis'),
+(7, 'Je me cultive'),
+(8, 'Surprends-moi');
 
 -- --------------------------------------------------------
 
@@ -49,25 +55,111 @@ INSERT INTO `categorie` (`id_cat`, `nom_cat`) VALUES
 -- Structure de la table `etablissement`
 --
 
-CREATE TABLE `etablissement` (
-  `id_etab` int(10) NOT NULL,
-  `nom_etab` varchar(50) NOT NULL,
-  `description_etab` text NOT NULL,
-  `adresse_etab` varchar(50) NOT NULL,
+DROP TABLE IF EXISTS `etablissement`;
+CREATE TABLE IF NOT EXISTS `etablissement` (
+  `id_etab` int(5) NOT NULL AUTO_INCREMENT,
+  `nom_etab` varchar(64) NOT NULL,
+  `description_etab` text,
+  `adresse_etab` varchar(128) NOT NULL,
   `codePostal_etab` int(5) NOT NULL,
-  `ville_etab` varchar(40) NOT NULL,
-  `tel_etab` varchar(10) NOT NULL,
-  `note_etab` int(2) NOT NULL,
-  `avis_etab` text NOT NULL,
-  `site_etab` varchar(40) NOT NULL
+  `ville_etab` varchar(128) NOT NULL,
+  `site_etab` varchar(64) DEFAULT NULL,
+  `sousCat_etab` int(4) NOT NULL,
+  PRIMARY KEY (`id_etab`),
+  KEY `sousCat_etab` (`sousCat_etab`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `evenement`
+--
+
+DROP TABLE IF EXISTS `evenement`;
+CREATE TABLE IF NOT EXISTS `evenement` (
+  `id_eve` int(10) NOT NULL AUTO_INCREMENT,
+  `nom_eve` varchar(50) NOT NULL,
+  `description_eve` text NOT NULL,
+  `adresse_eve` varchar(40) NOT NULL,
+  `codePostal_eve` int(5) NOT NULL,
+  `ville_eve` varchar(128) NOT NULL,
+  `prix_eve` int(2) NOT NULL,
+  `paiement_eve` varchar(50) NOT NULL,
+  `iduti_eve` int(10) NOT NULL,
+  `dateDebut_eve` date NOT NULL,
+  `dateFin_eve` date NOT NULL,
+  `tel_eve` int(10) NOT NULL,
+  `photo` varchar(64) NOT NULL,
+  PRIMARY KEY (`id_eve`),
+  KEY `evenement_ibfk_1` (`iduti_eve`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+-- --------------------------------------------------------
+
 --
--- Déchargement des données de la table `etablissement`
+-- Structure de la table `favoris`
 --
 
-INSERT INTO `etablissement` (`id_etab`, `nom_etab`, `description_etab`, `adresse_etab`, `codePostal_etab`, `ville_etab`, `tel_etab`, `note_etab`, `avis_etab`, `site_etab`) VALUES
-(1, 'Institut G4', 'Établissement scolaire future chef de projet ', '30 Rue de turbigo', 75003, 'Paris', '', 1, '', '');
+DROP TABLE IF EXISTS `favoris`;
+CREATE TABLE IF NOT EXISTS `favoris` (
+  `id_fav` int(10) NOT NULL AUTO_INCREMENT,
+  `idetab_fav` int(10) NOT NULL,
+  `iduti_fav` int(10) NOT NULL,
+  PRIMARY KEY (`id_fav`),
+  KEY `idetab_fav` (`idetab_fav`),
+  KEY `iduti_fav` (`iduti_fav`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `lieuinsolite`
+--
+
+DROP TABLE IF EXISTS `lieuinsolite`;
+CREATE TABLE IF NOT EXISTS `lieuinsolite` (
+  `id_lieu` int(4) NOT NULL AUTO_INCREMENT,
+  `nom_lieu` varchar(128) NOT NULL,
+  `adresse_lieu` varchar(64) DEFAULT NULL,
+  `codePostal_lieu` int(5) NOT NULL,
+  `ville_lieu` varchar(128) NOT NULL,
+  `tel_lieu` int(10) DEFAULT NULL,
+  `description_lieu` text,
+  `verification_lieu` int(2) NOT NULL,
+  `sousCat_lieu` int(4) DEFAULT NULL,
+  PRIMARY KEY (`id_lieu`),
+  KEY `sousCat_lieu` (`sousCat_lieu`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `noteetab`
+--
+
+DROP TABLE IF EXISTS `noteetab`;
+CREATE TABLE IF NOT EXISTS `noteetab` (
+  `idNoteEtab` int(4) NOT NULL AUTO_INCREMENT,
+  `id_etab` int(4) NOT NULL,
+  `noteEtablissement` int(2) NOT NULL,
+  PRIMARY KEY (`idNoteEtab`),
+  KEY `id_etab` (`id_etab`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `paiement`
+--
+
+DROP TABLE IF EXISTS `paiement`;
+CREATE TABLE IF NOT EXISTS `paiement` (
+  `id_pai` int(10) NOT NULL AUTO_INCREMENT,
+  `id_eve` int(10) NOT NULL,
+  `nompaypal_pai` varchar(40) NOT NULL,
+  PRIMARY KEY (`id_pai`),
+  KEY `paiement_ibfk_1` (`id_eve`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -75,23 +167,24 @@ INSERT INTO `etablissement` (`id_etab`, `nom_etab`, `description_etab`, `adresse
 -- Structure de la table `souscategorie`
 --
 
-CREATE TABLE `souscategorie` (
-  `id_sou` int(10) NOT NULL,
+DROP TABLE IF EXISTS `souscategorie`;
+CREATE TABLE IF NOT EXISTS `souscategorie` (
+  `id_sou` int(10) NOT NULL AUTO_INCREMENT,
   `nom_sou` varchar(30) NOT NULL,
-  `idcat_sou` int(10) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
+  PRIMARY KEY (`id_sou`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 --
--- Structure de la table `souscategorieetab`
+-- Déchargement des données de la table `souscategorie`
 --
 
-CREATE TABLE `souscategorieetab` (
-  `id_sce` int(10) NOT NULL,
-  `idetab_sce` int(10) NOT NULL,
-  `idsou_sce` int(10) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+INSERT INTO `souscategorie` (`id_sou`, `nom_sou`) VALUES
+(1, 'Bar'),
+(2, 'Pub'),
+(3, 'Restaurant'),
+(4, 'Street Food'),
+(5, 'Nightclub'),
+(6, 'Cinéma');
 
 -- --------------------------------------------------------
 
@@ -99,103 +192,52 @@ CREATE TABLE `souscategorieetab` (
 -- Structure de la table `utilisateur`
 --
 
-CREATE TABLE `utilisateur` (
-  `id_uti` int(10) NOT NULL,
+DROP TABLE IF EXISTS `utilisateur`;
+CREATE TABLE IF NOT EXISTS `utilisateur` (
+  `id_uti` int(10) NOT NULL AUTO_INCREMENT,
   `type_uti` varchar(20) NOT NULL,
   `civilite_uti` varchar(20) NOT NULL,
   `nom_uti` varchar(30) NOT NULL,
   `prenom_uti` varchar(40) NOT NULL,
-  `dateNaissance_uti` date NOT NULL,
+  `dateNaissance_uti` date DEFAULT NULL,
   `tel_uti` varchar(10) NOT NULL,
   `mdp_uti` varchar(40) NOT NULL,
   `email_uti` varchar(50) NOT NULL,
-  `adresse_uti` varchar(50) NOT NULL,
-  `codePostal_uti` int(5) NOT NULL,
-  `ville_uti` varchar(40) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `adresse_uti` varchar(50) DEFAULT NULL,
+  `codePostal_uti` int(5) DEFAULT NULL,
+  `ville_uti` varchar(40) DEFAULT NULL,
+  PRIMARY KEY (`id_uti`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `utilisateur`
 --
 
 INSERT INTO `utilisateur` (`id_uti`, `type_uti`, `civilite_uti`, `nom_uti`, `prenom_uti`, `dateNaissance_uti`, `tel_uti`, `mdp_uti`, `email_uti`, `adresse_uti`, `codePostal_uti`, `ville_uti`) VALUES
-(1, 'test', 'test', 'test', 'test', '2019-03-07', '0625854120', 'ertyu', 'test@hotmail.fr', 'azerty', 75000, 'Paris');
+(1, 'Particulier', 'Mr', 'MOHAMED', 'Alec', '1997-08-28', '0651101010', 'azerty123', 'alec.mohamedbtssio@gmail.com', '40 rue faubourg', 75003, 'Paris');
 
---
--- Index pour les tables déchargées
---
-
---
--- Index pour la table `categorie`
---
-ALTER TABLE `categorie`
-  ADD PRIMARY KEY (`id_cat`);
-
---
--- Index pour la table `etablissement`
---
-ALTER TABLE `etablissement`
-  ADD PRIMARY KEY (`id_etab`);
-
---
--- Index pour la table `souscategorie`
---
-ALTER TABLE `souscategorie`
-  ADD PRIMARY KEY (`id_sou`),
-  ADD KEY `idcat_sou` (`idcat_sou`);
-
---
--- Index pour la table `souscategorieetab`
---
-ALTER TABLE `souscategorieetab`
-  ADD PRIMARY KEY (`id_sce`),
-  ADD KEY `idetab_sce` (`idetab_sce`),
-  ADD KEY `idsou_sce` (`idsou_sce`);
-
---
--- Index pour la table `utilisateur`
---
-ALTER TABLE `utilisateur`
-  ADD PRIMARY KEY (`id_uti`);
-
---
--- AUTO_INCREMENT pour les tables déchargées
---
-
---
--- AUTO_INCREMENT pour la table `categorie`
---
-ALTER TABLE `categorie`
-  MODIFY `id_cat` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
---
--- AUTO_INCREMENT pour la table `etablissement`
---
-ALTER TABLE `etablissement`
-  MODIFY `id_etab` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
---
--- AUTO_INCREMENT pour la table `souscategorie`
---
-ALTER TABLE `souscategorie`
-  MODIFY `id_sou` int(10) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT pour la table `souscategorieetab`
---
-ALTER TABLE `souscategorieetab`
-  MODIFY `id_sce` int(10) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT pour la table `utilisateur`
---
-ALTER TABLE `utilisateur`
-  MODIFY `id_uti` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- Contraintes pour les tables déchargées
 --
 
 --
--- Contraintes pour la table `souscategorie`
+-- Contraintes pour la table `evenement`
 --
-ALTER TABLE `souscategorie`
-  ADD CONSTRAINT `souscategorie_ibfk_1` FOREIGN KEY (`idcat_sou`) REFERENCES `categorie` (`id_cat`);
+ALTER TABLE `evenement`
+  ADD CONSTRAINT `evenement_ibfk_1` FOREIGN KEY (`iduti_eve`) REFERENCES `utilisateur` (`id_uti`);
+
+--
+-- Contraintes pour la table `favoris`
+--
+ALTER TABLE `favoris`
+  ADD CONSTRAINT `favoris_ibfk_1` FOREIGN KEY (`idetab_fav`) REFERENCES `etablissement` (`id_etab`),
+  ADD CONSTRAINT `favoris_ibfk_2` FOREIGN KEY (`iduti_fav`) REFERENCES `utilisateur` (`id_uti`);
+
+--
+-- Contraintes pour la table `paiement`
+--
+ALTER TABLE `paiement`
+  ADD CONSTRAINT `paiement_ibfk_1` FOREIGN KEY (`id_eve`) REFERENCES `evenement` (`id_eve`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

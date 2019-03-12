@@ -4,12 +4,12 @@ require_once __DIR__ . '/config.php';
 
 class API
 {
-    function suppressionLieu($idEvenement)
+    function suppressionLieu($idLieuInsolite)
     {
         $db = new Connect;
 
         // REQUETE CATEGORIE
-        $data = $db->prepare('DELETE FROM evenement WHERE id_eve = "' . $idEvenement . '"');
+        $data = $db->prepare('DELETE FROM lieuInsolite WHERE id_lieu = "' . $idLieuInsolite . '"');
         $data->execute();
 
     }
@@ -19,9 +19,9 @@ class API
         $db = new Connect;
 
         // REQUETE CATEGORIE
-        $data = $db->prepare('UPDATE evenement 
+        $data = $db->prepare('UPDATE lieuinsolite 
                                         SET 
-                                        WHERE id_eve = :id_eve');
+                                        WHERE id_lieu = :id_lieu');
         $data->execute();
 
     }
@@ -31,8 +31,8 @@ class API
         $db = new Connect;
 
         // REQUETE CATEGORIE
-        $data = $db->prepare('INSERT INTO evenement(nom_eve,description_eve,adresse_eve,codePostal_eve,ville_eve,iduti_eve)
-                                        VALUES(:nom_eve,description_eve,adresse_eve,codePostal_eve,ville_eve,iduti_eve)');
+        $data = $db->prepare('INSERT INTO lieuinsolite(nom_lieu,adresse_lieu,codePostal_lieu,ville_lieu,tel_lieu,description_lieu,sousCat_lieu,verification_lieu)
+                                        VALUES(:nomLieu,:adresseLieu,:codePostalLieu,:villeLieu,:telLieu,:descriptionLieu,:sousCatLieu,"0")');
         $data->execute();
 
     }
@@ -42,16 +42,16 @@ class API
         $db = new Connect;
         $lieuUser = array();
         // REQUETE CATEGORIE
-        $data = $db->prepare('SELECT * FROM evenement WHERE iduti_eve = "' . $_SESSION['id'] . '"');
+        $data = $db->prepare('SELECT * FROM lieuinsolite WHERE iduti_lieu = "' . $_SESSION['id'] . '"');
         $data->execute();
         while ($OutputData = $data->fetch(PDO::FETCH_ASSOC)) {
-            $lieuUser[$OutputData['id_eve']] = array(
-                'idEvenement' => $OutputData['id_eve'],
-                'nom' => $OutputData['nom_eve'],
-                'description' => $OutputData['description_eve'],
-                'adresse' => $OutputData['adresse_eve'],
-                'codePostal' => $OutputData['codePostal_eve'],
-                'ville' => $OutputData['ville_eve'],
+            $lieuUser[$OutputData['id_lieu']] = array(
+                'idlieuinsolite' => $OutputData['id_lieu'],
+                'nom' => $OutputData['nom_lieu'],
+                'description' => $OutputData['description_lieu'],
+                'adresse' => $OutputData['adresse_lieu'],
+                'codePostal' => $OutputData['codePostal_lieu'],
+                'ville' => $OutputData['ville_lieu'],
             );
         }
 
