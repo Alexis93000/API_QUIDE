@@ -1,0 +1,18 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Home</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <h2>Voici la liste</h2>
+ <ion-card *ngFor="let liste of allListe">
+  <ion-card-content>
+     <ion-card-content-title>
+     {{liste.title}}
+     </ion-card-content-title>
+  </ion-card-content>
+
+
+</ion-card>
+</ion-content>
