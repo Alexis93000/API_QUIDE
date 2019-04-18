@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.4
+-- version 4.8.3
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le :  mar. 12 mars 2019 à 15:39
--- Version du serveur :  5.7.24
--- Version de PHP :  7.2.14
+-- Généré le :  jeu. 18 avr. 2019 à 08:40
+-- Version du serveur :  5.7.23
+-- Version de PHP :  7.2.10
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -207,14 +207,15 @@ CREATE TABLE IF NOT EXISTS `utilisateur` (
   `codePostal_uti` int(5) DEFAULT NULL,
   `ville_uti` varchar(40) DEFAULT NULL,
   PRIMARY KEY (`id_uti`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `utilisateur`
 --
 
 INSERT INTO `utilisateur` (`id_uti`, `type_uti`, `civilite_uti`, `nom_uti`, `prenom_uti`, `dateNaissance_uti`, `tel_uti`, `mdp_uti`, `email_uti`, `adresse_uti`, `codePostal_uti`, `ville_uti`) VALUES
-(1, 'Particulier', 'Mr', 'MOHAMED', 'Alec', '1997-08-28', '0651101010', 'azerty123', 'alec.mohamedbtssio@gmail.com', '40 rue faubourg', 75003, 'Paris');
+(1, 'Particulier', 'Mr', 'MOHAMED', 'Alec', '1997-08-28', '0651101010', 'azerty123', 'alec.mohamedbtssio@gmail.com', '40 rue faubourg', 75003, 'Paris'),
+(2, 'Particulier', 'Mr', 'MAXIMIN', 'FlorentAlexi', '2019-03-13', '0214563248', 'coucou', 'test@gmail.com', '50 rue ', 78445, 'jsaispas');
 
 --
 -- Contraintes pour les tables déchargées
@@ -225,19 +226,6 @@ INSERT INTO `utilisateur` (`id_uti`, `type_uti`, `civilite_uti`, `nom_uti`, `pre
 --
 ALTER TABLE `evenement`
   ADD CONSTRAINT `evenement_ibfk_1` FOREIGN KEY (`iduti_eve`) REFERENCES `utilisateur` (`id_uti`);
-
---
--- Contraintes pour la table `favoris`
---
-ALTER TABLE `favoris`
-  ADD CONSTRAINT `favoris_ibfk_1` FOREIGN KEY (`idetab_fav`) REFERENCES `etablissement` (`id_etab`),
-  ADD CONSTRAINT `favoris_ibfk_2` FOREIGN KEY (`iduti_fav`) REFERENCES `utilisateur` (`id_uti`);
-
---
--- Contraintes pour la table `paiement`
---
-ALTER TABLE `paiement`
-  ADD CONSTRAINT `paiement_ibfk_1` FOREIGN KEY (`id_eve`) REFERENCES `evenement` (`id_eve`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
