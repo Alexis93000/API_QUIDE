@@ -11,21 +11,20 @@ header('Access-Control-Allow-Origin: *');
 header('Content-Type: application/json');
 
 include_once '../../config.php';
-include_once '../../model/lieuinsolite.php';
+include_once '../../model/souscategorie.php';
 
 //Connection BDD
 $database = new Database();
 $db = $database->connect();
 
 //Instancier Utilisateur
-$lieu = new lieuinsolite($db);
+$souCat = new souscategorie($db);
 
 //Query Read
 
-if(!empty($_GET['id'])){
-    echo $lieu->showInfoLieu($_GET['id']);
-}else {
-    echo $lieu->showLieu();
-}
+echo $souCat->readSousCategorie();
+
 
 $db = null;
+
+

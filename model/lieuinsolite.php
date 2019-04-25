@@ -60,9 +60,9 @@ class lieuinsolite
 
 
     //GetSpecific User
-    public function showLieuUser($idProfile){
+    public function showInfoLieu($idInsolite){
         $lieuinsolite = array();
-        $query = 'SELECT * FROM lieuinsolite WHERE idUti_lieu ="'. addslashes($idProfile) . '"';
+        $query = 'SELECT * FROM lieuinsolite WHERE id_lieu ="'. addslashes($idInsolite) . '"';
 
         $stmt = $this->conn->prepare($query);
         $stmt->execute();

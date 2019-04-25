@@ -6,26 +6,27 @@
  * Time: 15:14
  */
 
+
 //Headers
 header('Access-Control-Allow-Origin: *');
 header('Content-Type: application/json');
 
 include_once '../../config.php';
-include_once '../../model/lieuinsolite.php';
+include_once '../../model/utilisateur.php';
 
 //Connection BDD
 $database = new Database();
 $db = $database->connect();
 
 //Instancier Utilisateur
-$lieu = new lieuinsolite($db);
+$user = new utilisateur($db);
 
 //Query Read
 
-if(!empty($_GET['id'])){
-    echo $lieu->showInfoLieu($_GET['id']);
-}else {
-    echo $lieu->showLieu();
+if(!empty($_GET['login']) && !empty($_GET['pwd'])){
+    echo $user->connexion($_GET['login'],$_GET['pwd']);
+}else{
+    echo 'Erreur connexion';
 }
 
 $db = null;
