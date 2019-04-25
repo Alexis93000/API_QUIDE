@@ -50,8 +50,7 @@ class lieuinsolite
                 'telLieu' => $OutputData['tel_lieu'],
                 'descriptionLieu' => $OutputData['description_lieu'],
                 'verificationLieu' => $OutputData['verification_lieu'],
-                'sousCatLieu' => $OutputData['sousCat_lieu'],
-                'idUserLieu' => $OutputData['idUti_lieu']
+                'sousCatLieu' => $OutputData['sousCat_lieu']
             );
         }
 
@@ -62,10 +61,11 @@ class lieuinsolite
     //GetSpecific User
     public function showInfoLieu($idInsolite){
         $lieuinsolite = array();
-        $query = 'SELECT * FROM lieuinsolite WHERE id_lieu ="'. addslashes($idInsolite) . '"';
+        $query = 'SELECT * FROM lieuinsolite WHERE id_lieu ="'. $idInsolite . '"';
 
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
+        var_dump($query);
         while ($OutputData = $stmt->fetch(PDO::FETCH_ASSOC)) {
             $lieuinsolite[$OutputData['id_lieu']] = array(
                 'idLieu' => $OutputData['id_lieu'],
@@ -76,8 +76,7 @@ class lieuinsolite
                 'telLieu' => $OutputData['tel_lieu'],
                 'descriptionLieu' => $OutputData['description_lieu'],
                 'verificationLieu' => $OutputData['verification_lieu'],
-                'sousCatLieu' => $OutputData['sousCat_lieu'],
-                'idUserLieu' => $OutputData['idUti_lieu']
+                'sousCatLieu' => $OutputData['sousCat_lieu']
             );
         }
 

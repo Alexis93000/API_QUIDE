@@ -28,7 +28,7 @@ class etablissement
         $this->conn = $db;
     }
 
-    //GetCategorie
+    //GetEtablissement
     public function readEtablissement(){
 
         $etablissement = array();
@@ -36,6 +36,30 @@ class etablissement
         $req = $this->conn->prepare('SELECT *
                                      FROM etablissement
                                       ORDER BY id_etab');
+        $req->execute();
+        while ($OutputData = $req->fetch(PDO::FETCH_ASSOC)) {
+            $etablissement[$OutputData['id_etab']] = array(
+                'idEtab' => $OutputData['id_etab'],
+                'nomEtab' => $OutputData['nom_etab'],
+                'descriptionEtab' => $OutputData['description_etab'],
+                'adresseEtab' => $OutputData['adresse_etab'],
+                'codePostalEtab' => $OutputData['codePostal_etab'],
+                'villeEtab' => $OutputData['ville_etab'],
+                'siteEtab' => $OutputData['site_etab'],
+                'sousCatEtab' => $OutputData['sousCat_etab']
+            );
+        }
+
+        return json_encode($etablissement);
+    }
+
+    public function readInfoEtablissement($idEtablissement){
+
+        $etablissement = array();
+
+        $req = $this->conn->prepare('SELECT *
+                                     FROM etablissement
+                                     WHERE id_etab ="'.$idEtablissement.'"');
         $req->execute();
         while ($OutputData = $req->fetch(PDO::FETCH_ASSOC)) {
             $etablissement[$OutputData['id_etab']] = array(

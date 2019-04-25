@@ -22,8 +22,11 @@ $etab = new etablissement($db);
 
 //Query Read
 
-echo $etab->readEtablissement();
-
+if(!empty($_GET['id'])){
+    echo $etab->readInfoEtablissement($_GET['id']);
+}else {
+    echo $etab->readEtablissement();
+}
 
 $db = null;
 
