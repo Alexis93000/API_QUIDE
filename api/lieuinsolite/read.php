@@ -22,9 +22,9 @@ $lieu = new lieuinsolite($db);
 
 //Query Read
 
-if(!empty($_GET['id'])){
+if (!empty($_GET['id'])) {
     echo $lieu->showInfoLieu($_GET['id']);
-}else {
+} else {
     echo $lieu->showLieu();
 }
 

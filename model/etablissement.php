@@ -65,6 +65,7 @@ class etablissement
             $etablissement[$OutputData['id_etab']] = array(
                 'idEtab' => $OutputData['id_etab'],
                 'nomEtab' => $OutputData['nom_etab'],
+                'telEtab' => $OutputData['tel_etab'],
                 'descriptionEtab' => $OutputData['description_etab'],
                 'adresseEtab' => $OutputData['adresse_etab'],
                 'codePostalEtab' => $OutputData['codePostal_etab'],

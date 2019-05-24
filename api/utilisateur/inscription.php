@@ -23,10 +23,13 @@ $user = new utilisateur($db);
 
 //Query Read
 
-if(!empty($_GET['login']) && !empty($_GET['pwd'])){
-    echo $user->connexion($_GET['login'],$_GET['pwd']);
+if(!empty($_GET['nom'])){
+    echo $user->inscription("Particulier",$_GET['civilite'],$_GET['nom'],$_GET['prenom'],$_GET['date'],$_GET['tel'],$_GET['pwd'],$_GET['email'],$_GET['tel']);
 }else{
-    echo 'Erreur connexion';
+    echo 'Erreur inscription';
 }
 
 $db = null;
+
+
+

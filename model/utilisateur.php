@@ -105,4 +105,14 @@ class utilisateur
 
         return json_encode($utilisateur);
     }
+
+    public function inscription($typeUser,$civUser,$nomUser,$prenomUser,$dateUser,$telUser,$mdpUser,$emailUser){
+
+        $query = 'INSERT INTO utilisateur(type_uti,civilite_uti,nom_uti,prenom_uti,dateNaissance_uti,tel_uti,mdp_uti,email_uti)
+                  VALUES("'.addslashes($typeUser).'","'.addslashes($civUser).'","'.addslashes($nomUser).'","'.addslashes($prenomUser).'","'.addslashes($dateUser).'","'.addslashes($telUser).'","'.addslashes($mdpUser).'","'.addslashes($emailUser).'")';
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+        return 'Insertion dans la BDD';
+    }
+
 }
