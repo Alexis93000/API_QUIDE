@@ -10,22 +10,18 @@ class lieuinsolite
 {
     //Params de la DB
     private $conn;
-    private $table = 'utilisateur';
+    private $table = 'lieuinsolite';
 
     //Params de la table
-    public $id_uti;
-    public $type_uti;
-    public $civilite_uti;
-    public $nom_uti;
-    public $prenom_uti;
-    public $dateNaissance_uti;
-    public $tel_uti;
-    public $mdp_uti;
-    public $email_uti;
-    public $adresse_uti;
-    public $codePostal_uti;
-    public $ville_uti;
-    public $numSiret_uti;
+    public $id_lieu;
+    public $nom_lieu;
+    public $adresse_lieu;
+    public $codePostal_lieu;
+    public $ville_lieu	;
+    public $tel_lieu;
+    public $description_lieu;
+    public $verification_lieu;
+    public $sousCat_lieu;
 
     //Constructeur
     public function __construct($db)
@@ -83,4 +79,16 @@ class lieuinsolite
         return json_encode($lieuinsolite);
     }
 
-}
+    public function ajoutLieu($nom,$adresse,$codepostal,$ville,$telephone,$description){
+      $lieuinsolite = array();
+      $query = 'INSERT INTO  lieuinsolite (nom_lieu, adresse_lieu, codePostal_lieu, ville_lieu,
+         tel_lieu, description_lieu) VALUES ("'.$nom .'","' .$adresse .'","'.$codepostal .'",
+         "'.$ville .'","'.$telephone .'","'.$description .'")';
+
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+        return 'ajout dans la BDD';
+        }
+
+
+    }

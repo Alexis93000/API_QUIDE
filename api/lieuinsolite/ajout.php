@@ -6,6 +6,7 @@
  * Time: 15:14
  */
 
+
 //Headers
 header('Access-Control-Allow-Origin: *');
 header('Content-Type: application/json');
@@ -17,15 +18,16 @@ include_once '../../model/lieuinsolite.php';
 $database = new Database();
 $db = $database->connect();
 
-//Instancier Utilisateur
+//Instancier lieuinsolite
 $lieu = new lieuinsolite($db);
 
 //Query Read
 
-if(!empty($_GET['id'])){
-    echo $lieu->showInfoLieu($_GET['id']);
-}else {
-    echo $lieu->showLieu();
+if(!empty($_GET['nom'])){
+    echo $lieu->ajoutLieu($_GET['nom'],$_GET['adresse'],$_GET['codepostal'],$_GET['ville']
+    ,$_GET['telephone'],$_GET['description']);
+}else{
+    echo 'Erreur ajout';
 }
 
 $db = null;
