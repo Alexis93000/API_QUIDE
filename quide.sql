@@ -42,9 +42,9 @@ CREATE TABLE IF NOT EXISTS `categorie` (
 INSERT INTO `categorie` (`id_cat`, `nom_cat`) VALUES
 (1, 'Les Incontournables'),
 (2, 'Je decouvre de nouveaux endroits'),
-(3, 'J\'ai les crocs'),
-(4, 'Je prends qu\'un verre'),
-(5, 'Je veux m\'eclater'),
+(3, 'J ai les crocs'),
+(4, 'Je prends qu un verre'),
+(5, 'Je veux m eclater'),
 (6, 'Je sors entre amis'),
 (7, 'Je me cultive'),
 (8, 'Surprends-moi');

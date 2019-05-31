@@ -24,7 +24,8 @@ class categorie
 
 
     //GetCategorie
-    public function readCategorie(){
+    public function readCategorie()
+    {
 
         $categorie = array();
 
@@ -36,6 +37,7 @@ class categorie
                 'nomCat' => $OutputData['nom_cat']
             );
         }
+        $categories[] = $categorie;
 
         return json_encode($categorie);
     }
